@@ -64,8 +64,19 @@ public class DynamicArray implements IntList {
     }
 
     @Override
-    public int remove(int index) {
-        throw new UnsupportedOperationException();
+    public int remove(int index) { // [1,2,3] size 3 remove(1) removed = 2
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("index: " + index);
+        }
+
+        int removed = data[index];
+
+        for (int i = index; i < size - 1; i++){
+            data[i] = data[i + 1];
+            metrics.move();
+        }
+        size--;
+        return removed;
     }
 
     @Override
