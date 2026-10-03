@@ -81,7 +81,14 @@ public class DynamicArray implements IntList {
 
     @Override
     public boolean contains(int x) {
-        throw new UnsupportedOperationException();
+        for(int i = 0; i < size; i++){
+            metrics.step();
+            metrics.compare();
+            if (data[i] == x){
+                return true;
+            }
+        }
+        return false;
     }
 
 
