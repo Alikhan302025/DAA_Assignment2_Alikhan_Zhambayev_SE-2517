@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MinHeapTest {
 
-    // ---------- insert и peekMin ----------
 
     @Test
     void insertAndPeekMin() {
@@ -54,7 +53,7 @@ public class MinHeapTest {
     void insertDescendingBubblesToRoot() {
         MinHeap heap = new MinHeap();
         for (int i = 100; i >= 1; i--) {
-            heap.insert(i);              // каждый новый элемент меньше всех, идёт до корня
+            heap.insert(i);
             assertEquals(i, heap.peekMin());
             assertTrue(heap.isValidHeap());
         }
@@ -88,7 +87,6 @@ public class MinHeapTest {
         }
     }
 
-    // ---------- счётчики ----------
 
     @Test
     void insertIntoEmptyCountsNothing() {
@@ -110,7 +108,7 @@ public class MinHeapTest {
         heap.insert(3);
         m.reset();
 
-        heap.insert(10);                       // родитель 5 не больше 10: одна проверка, обмена нет
+        heap.insert(10);
         assertEquals(1, m.getSteps());
         assertEquals(1, m.getComparisons());
         assertEquals(0, m.getMoves());
@@ -125,7 +123,7 @@ public class MinHeapTest {
         heap.insert(3);
         m.reset();
 
-        heap.insert(1);                        // 1 поднимается через 5 и 2 до корня
+        heap.insert(1);
         assertEquals(1, heap.peekMin());
         assertEquals(2, m.getSteps());
         assertEquals(2, m.getComparisons());
@@ -137,17 +135,16 @@ public class MinHeapTest {
         Metrics m = new Metrics();
         MinHeap heap = new MinHeap(m);
         for (int i = 0; i < 10; i++) {
-            heap.insert(i);                    // возрастающие: обменов нет
+            heap.insert(i);
         }
         assertEquals(0, m.getMoves());
 
-        heap.insert(10);                       // 11-й элемент: grow копирует 10
+        heap.insert(10);
         assertEquals(10, m.getMoves());
         assertEquals(11, heap.size());
         assertTrue(heap.isValidHeap());
     }
 
-    // ---------- extractMin ----------
 
     @Test
     void extractMinOnEmptyThrows() {
@@ -212,7 +209,7 @@ public class MinHeapTest {
 
         for (int i = 0; i < n; i++) {
             assertEquals(expected[i], heap.extractMin());
-            assertTrue(heap.isValidHeap());       // после КАЖДОГО extractMin
+            assertTrue(heap.isValidHeap());
         }
         assertEquals(0, heap.size());
     }
@@ -239,7 +236,6 @@ public class MinHeapTest {
         }
     }
 
-    // ---------- счётчики extractMin ----------
 
     @Test
     void extractMinFromSingleElementCountsNothing() {

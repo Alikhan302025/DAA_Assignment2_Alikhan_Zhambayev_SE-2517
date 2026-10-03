@@ -47,13 +47,13 @@ public class MyLinkedListTest {
     void addCountsTwoMoves() {
         Metrics m = new Metrics();
         MyLinkedList list = new MyLinkedList(m);
-        list.add(5);                           // в пустой: head и tail
+        list.add(5);
         assertEquals(2, m.getMoves());
 
         m.reset();
-        list.add(6);                           // в непустой: tail.next и tail
+        list.add(6);
         assertEquals(2, m.getMoves());
-        assertEquals(0, m.getSteps());         // обхода нет, шагов нет
+        assertEquals(0, m.getSteps());
     }
 
     @Test
@@ -65,11 +65,11 @@ public class MyLinkedListTest {
         list.add(7);
         m.reset();
 
-        list.get(2);                           // посетили 3 узла
+        list.get(2);
         assertEquals(3, m.getSteps());
 
         m.reset();
-        list.get(0);                           // посетили 1 узел
+        list.get(0);
         assertEquals(1, m.getSteps());
     }
 
@@ -91,10 +91,10 @@ public class MyLinkedListTest {
     @Test
     void addAtIndexHeadAndTail() {
         MyLinkedList list = new MyLinkedList();
-        list.add(0, 1);          // в пустой список
-        list.add(0, 0);          // в начало
-        list.add(2, 2);          // в конец (index == size)
-        list.add(3);             // обычный add после вставки: проверка tail
+        list.add(0, 1);
+        list.add(0, 0);
+        list.add(2, 2);
+        list.add(3);
 
         assertEquals(4, list.size());
         assertEquals(0, list.get(0));
@@ -108,7 +108,7 @@ public class MyLinkedListTest {
         MyLinkedList list = new MyLinkedList();
         list.add(1);
         assertThrows(IndexOutOfBoundsException.class, () -> list.add(-1, 5));
-        assertThrows(IndexOutOfBoundsException.class, () -> list.add(2, 5)); // size = 1, значит 2 нельзя
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(2, 5));
     }
 
     @Test
@@ -121,8 +121,8 @@ public class MyLinkedListTest {
         m.reset();
 
         list.add(0, 9);
-        assertEquals(2, m.getMoves());         // две ссылки
-        assertEquals(0, m.getSteps());         // обхода нет
+        assertEquals(2, m.getMoves());
+        assertEquals(0, m.getSteps());
     }
 
     @Test
@@ -134,7 +134,7 @@ public class MyLinkedListTest {
         }
         m.reset();
 
-        list.add(2, 9);                        // prev на позиции 1: посещаем 2 узла
+        list.add(2, 9);
         assertEquals(2, m.getSteps());
         assertEquals(2, m.getMoves());
     }
@@ -162,7 +162,7 @@ public class MyLinkedListTest {
         list.add(3);
 
         assertEquals(1, list.remove(0));
-        assertEquals(3, list.remove(1));   // теперь [2, 3], индекс 1 это последний
+        assertEquals(3, list.remove(1));
         assertEquals(1, list.size());
         assertEquals(2, list.get(0));
     }
@@ -185,9 +185,9 @@ public class MyLinkedListTest {
         list.add(1);
         list.add(2);
         list.add(3);
-        list.remove(2);                    // удалили последний
+        list.remove(2);
 
-        list.add(99);                      // должен встать после 2
+        list.add(99);
         assertEquals(3, list.size());
         assertEquals(2, list.get(1));
         assertEquals(99, list.get(2));
@@ -196,7 +196,7 @@ public class MyLinkedListTest {
     @Test
     void removeInvalidThrows() {
         MyLinkedList list = new MyLinkedList();
-        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(0)); // пустой
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(0));
         list.add(1);
         assertThrows(IndexOutOfBoundsException.class, () -> list.remove(1));
         assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1));
@@ -212,8 +212,8 @@ public class MyLinkedListTest {
         m.reset();
 
         list.remove(0);
-        assertEquals(1, m.getMoves());         // head = head.next
-        assertEquals(0, m.getSteps());         // обхода нет
+        assertEquals(1, m.getMoves());
+        assertEquals(0, m.getSteps());
     }
 
     @Test
@@ -225,9 +225,9 @@ public class MyLinkedListTest {
         }
         m.reset();
 
-        list.remove(3);                        // prev на позиции 2: посещаем 3 узла
+        list.remove(3);
         assertEquals(3, m.getSteps());
-        assertEquals(2, m.getMoves());         // prev.next и tail
+        assertEquals(2, m.getMoves());
     }
 
     @Test
@@ -271,12 +271,12 @@ public class MyLinkedListTest {
         list.add(7);
         m.reset();
 
-        list.contains(7);                      // найдёт на третьем узле
+        list.contains(7);
         assertEquals(3, m.getSteps());
         assertEquals(3, m.getComparisons());
 
         m.reset();
-        list.contains(99);                     // не найдёт: пройдёт все 3
+        list.contains(99);
         assertEquals(3, m.getSteps());
         assertEquals(3, m.getComparisons());
     }

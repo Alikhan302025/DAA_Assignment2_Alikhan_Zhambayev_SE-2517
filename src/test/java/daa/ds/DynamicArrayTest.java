@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DynamicArrayTest {
 
-    // ---------- add(x) и get ----------
 
     @Test
     void addAndGet() {
@@ -47,7 +46,6 @@ public class DynamicArrayTest {
         assertThrows(IndexOutOfBoundsException.class, () -> arr.get(-1));
     }
 
-    // ---------- add(index, x) ----------
 
     @Test
     void addAtIndexInMiddle() {
@@ -99,7 +97,6 @@ public class DynamicArrayTest {
         assertEquals(9, arr.get(10));
     }
 
-    // ---------- remove(index) ----------
 
     @Test
     void removeFromMiddleReturnsValue() {
@@ -146,7 +143,6 @@ public class DynamicArrayTest {
         assertThrows(IndexOutOfBoundsException.class, () -> arr.remove(-1));
     }
 
-    // ---------- contains(x) ----------
 
     @Test
     void containsFindsPresentAndMissing() {
@@ -180,7 +176,6 @@ public class DynamicArrayTest {
         assertFalse(arr.contains(2));   // после remove 2 не должно находиться
     }
 
-    // ---------- счётчики ----------
 
     @Test
     void getCountsOneStep() {
@@ -202,7 +197,7 @@ public class DynamicArrayTest {
         arr.add(7);
         m.reset();
 
-        arr.contains(7);                       // найдёт на третьем элементе
+        arr.contains(7);
         assertEquals(3, m.getSteps());
         assertEquals(3, m.getComparisons());
     }
@@ -216,7 +211,7 @@ public class DynamicArrayTest {
         }
         m.reset();
 
-        arr.remove(0);                         // сдвигаются 4 элемента
+        arr.remove(0);
         assertEquals(4, m.getMoves());
     }
 
@@ -229,7 +224,7 @@ public class DynamicArrayTest {
         arr.add(3);
         m.reset();
 
-        arr.add(0, 9);                         // сдвигаются 3 элемента
+        arr.add(0, 9);
         assertEquals(3, m.getMoves());
     }
 
@@ -240,13 +235,12 @@ public class DynamicArrayTest {
         for (int i = 0; i < 10; i++) {
             arr.add(i);
         }
-        assertEquals(0, m.getMoves());         // роста ещё не было
+        assertEquals(0, m.getMoves());
 
-        arr.add(10);                           // 11-й элемент: копируются 10
+        arr.add(10);
         assertEquals(10, m.getMoves());
     }
 
-    // ---------- случайное сравнение с ArrayList ----------
 
     @Test
     void randomOperationsMatchArrayList() {
