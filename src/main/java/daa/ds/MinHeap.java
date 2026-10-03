@@ -87,6 +87,26 @@ public class MinHeap {
         }
     }
 
+    private void bubbleDown(int i) {
+        while (left(i) < size) {
+            metrics.step();
+            int smallest = left(i);
+            if (right(i) < size) {
+                metrics.compare();
+                if (data[right(i)] < data[smallest]) {
+                    smallest = right(i);
+                }
+            }
+            metrics.compare();
+            if (data[smallest] < data[i]) {
+                swap(i, smallest);
+                i = smallest;
+            } else {
+                break;
+            }
+        }
+    }
+
     public void insert(int x) {
         if (size == data.length) {
             grow();
@@ -100,6 +120,16 @@ public class MinHeap {
 
 
     public int extractMin() {
-        throw new UnsupportedOperationException();
+        if (size == 0) {
+            throw new IllegalStateException("heap is empty");
+        }
+        int min = data[0];
+        size--;
+        if (size > 0) {
+            data[0] = data[size];
+            metrics.move();
+            bubbleDown(0);
+        }
+        return min;
     }
 }
