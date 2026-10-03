@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class Benchmark {
     private static final int[] SIZES = {100, 1_000, 10_000, 100_000};
-    private static final int WARMUP = 3;          // прогоны, которые отбрасываем
+    private static final int WARMUP = 5;          // прогоны, которые отбрасываем
     private static final int RUNS = 5;            // прогоны, из которых берём медиану
     private static final int GET_QUERIES = 10_000;
     private static final int SEARCH_QUERIES = 1_000;
@@ -22,6 +22,8 @@ public class Benchmark {
     private static final long SEED = 42;
 
     public List<Result> run() {
+        System.out.println("Warm-up...");
+        warmUp();
         List<Result> results = new ArrayList<>();
 
         for (int n : SIZES) {
@@ -39,6 +41,19 @@ public class Benchmark {
             results.add(runW4(n, data));
         }
         return results;
+    }
+
+    private void warmUp() {
+        int[] data = generateData(1_000);
+        for (int i = 0; i < 3; i++) {
+            for (String structure : new String[]{"DynamicArray", "MyLinkedList"}) {
+                runW1(structure, 1_000, data);
+                runW2(structure, 1_000, data);
+                runW3(structure, 1_000, data, "head");
+                runW3(structure, 1_000, data, "middle");
+            }
+            runW4(1_000, data);
+        }
     }
 
     private int[] generateData(int n) {
