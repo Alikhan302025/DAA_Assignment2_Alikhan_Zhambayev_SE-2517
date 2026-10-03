@@ -15,6 +15,16 @@ public class DynamicArray implements IntList {
     public DynamicArray(){
         this(new Metrics());
     }
+
+    private void grow() {
+        int[] bigger = new int[data.length * 2];
+        for (int i = 0; i < size; i++) {
+            bigger[i] = data[i];
+            metrics.move();
+        }
+        data = bigger;
+    }
+
     @Override
     public int size(){
         return size;
@@ -30,12 +40,27 @@ public class DynamicArray implements IntList {
 
     @Override
     public void add(int x) {
-        throw new UnsupportedOperationException();
+        if(size == data.length){
+            grow();}
+        data[size] = x;
+        size++;
     }
 
     @Override
     public void add(int index, int x) {
-        throw new UnsupportedOperationException();
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("index: " + index);
+        }
+        if (size == data.length) {
+            grow();}
+
+        for (int i = size; i > index; i--){// [1,2,3] size 3 add(1,9)
+            data[i] = data[i - 1];
+            metrics.move();
+
+        }
+        data[index] = x;
+        size++;
     }
 
     @Override
