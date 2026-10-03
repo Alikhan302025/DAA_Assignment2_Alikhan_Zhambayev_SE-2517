@@ -58,7 +58,22 @@ public class MyLinkedList implements IntList {
 
     @Override
     public void add(int x) {
-        throw new UnsupportedOperationException();
+        Node node = new Node(x);
+
+        if(head == null){
+            head = node;
+            tail = node;
+            metrics.move();
+            metrics.move();
+        }
+        else{
+            tail.next = node;
+            tail = node;
+            metrics.move();
+            metrics.move();
+
+        }
+        size++;
     }
 
     @Override
