@@ -44,6 +44,7 @@ public class MinHeap {
         metrics.move();
     }
 
+
     private void grow() {
         int[] bigger = new int[data.length * 2];
         for (int i = 0; i < size; i++) {
@@ -62,6 +63,8 @@ public class MinHeap {
         return true;
     }
 
+
+
     public int peekMin() {
         if (size == 0) {
             throw new IllegalStateException("heap is empty");
@@ -69,9 +72,32 @@ public class MinHeap {
         return data[0];
     }
 
-    public void insert(int x) {
-        throw new UnsupportedOperationException();
+    private void bubleUp(int i){
+        while(i > 0){
+            metrics.step();
+            metrics.compare();
+            int p = parent(i);
+            if (data[p] > data[i]) {
+                swap(p,i);
+                i = p;
+            }
+            else{
+                break;
+            }
+        }
     }
+
+    public void insert(int x) {
+        if (size == data.length) {
+            grow();
+        }
+
+        data[size] = x;
+        size++;
+        bubleUp(size - 1);
+    }
+
+
 
     public int extractMin() {
         throw new UnsupportedOperationException();
