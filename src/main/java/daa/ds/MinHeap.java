@@ -119,6 +119,7 @@ public class MinHeap {
 
 
 
+
     public int extractMin() {
         if (size == 0) {
             throw new IllegalStateException("heap is empty");
@@ -131,5 +132,17 @@ public class MinHeap {
             bubbleDown(0);
         }
         return min;
+    }
+
+    // Bonus B
+    public void buildHeap(int[] array) {
+        data = new int[Math.max(10, array.length)];
+        for (int i = 0; i < array.length; i++) {
+            data[i] = array[i];
+        }
+        size = array.length;
+        for (int i = parent(size - 1); i >= 0; i--) {
+            bubbleDown(i);
+        }
     }
 }

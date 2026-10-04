@@ -281,4 +281,81 @@ public class MinHeapTest {
         assertEquals(2, m.getMoves());         // постановка в корень + один обмен
         assertEquals(2, heap.peekMin());
     }
+
+    // ---------- bonus: buildHeap ----------
+
+    @Test
+    void buildHeapMakesValidHeapAndSortedOutput() {
+        Random rnd = new Random(42);
+        int[] values = new int[2000];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = rnd.nextInt(1000);
+        }
+        MinHeap heap = new MinHeap();
+        heap.buildHeap(values);
+
+        assertEquals(values.length, heap.size());
+        assertTrue(heap.isValidHeap());
+
+        int[] expected = values.clone();
+        Arrays.sort(expected);
+        for (int e : expected) {
+            assertEquals(e, heap.extractMin());
+        }
+    }
+
+    @Test
+    void buildHeapEmptyAndSingle() {
+        MinHeap heap = new MinHeap();
+        heap.buildHeap(new int[0]);
+        assertEquals(0, heap.size());
+        assertThrows(IllegalStateException.class, heap::peekMin);
+
+        heap.buildHeap(new int[]{7});
+        assertEquals(1, heap.size());
+        assertEquals(7, heap.peekMin());
+    }
+
+    @Test
+    void buildHeapDoesNotModifyInputAndHandlesDuplicates() {
+        int[] input = {5, 3, 5, 1, 3, 1};
+        int[] copy = input.clone();
+        MinHeap heap = new MinHeap();
+        heap.buildHeap(input);
+
+        assertArrayEquals(copy, input);
+        assertTrue(heap.isValidHeap());
+        assertEquals(1, heap.peekMin());
+    }
+
+    @Test
+    void buildHeapComparisonsAreLinear() {
+        Metrics m = new Metrics();
+        MinHeap heap = new MinHeap(m);
+        int n = 10_000;
+        int[] values = new int[n];
+        for (int i = 0; i < n; i++) {
+            values[i] = n - i;                    // убывающие: худший случай для buildHeap
+        }
+        heap.buildHeap(values);
+        assertTrue(m.getComparisons() <= 3L * n);
+    }
+
+    @Test
+    void buildHeapBeatsInsertsOnDescendingData() {
+        int n = 1000;
+        int[] values = new int[n];
+        for (int i = 0; i < n; i++) {
+            values[i] = n - i;
+        }
+        Metrics floyd = new Metrics();
+        new MinHeap(floyd).buildHeap(values);
+
+        Metrics inserts = new Metrics();
+        MinHeap heap = new MinHeap(inserts);
+        for (int v : values) {
+            heap.insert(v);
+        }
+        assertTrue(floyd.getComparisons() < inserts.getComparisons());
+    }
 }
